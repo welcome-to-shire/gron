@@ -1,5 +1,7 @@
 # Gron
 
+[![Build Status](https://travis-ci.org/bcho/gron.svg?branch=master)](https://travis-ci.org/bcho/gron)
+
 Cron job runner powered by golang.
 
 ## Usage:
