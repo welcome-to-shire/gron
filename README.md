@@ -34,7 +34,7 @@ $ ./gron -config tasks.json
 ```
 
 | field name | description | required? |
-|:----------:|:-----------:|:---------:|
+|:----------:|-----------|---------|
 | name | task name | yes |
 | schedule | task schedule format string, please refer [robfig/cron][robfig-cron] | yes |
 | command | task command | yes |
