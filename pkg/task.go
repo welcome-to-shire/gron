@@ -2,6 +2,7 @@ package gron
 
 import (
 	"errors"
+	"fmt"
 	"os"
 	"os/exec"
 	"strings"
@@ -44,17 +45,24 @@ func makeCronJob(task TaskConfig) (Cronjob, error) {
 		const create_and_append = os.O_WRONLY | os.O_APPEND | os.O_CREATE
 		cmd.Stdin, err = os.Open(task.Stdin)
 		if err != nil {
+			fmt.Printf("Errors: %q", err)
 			return
 		}
 		cmd.Stdout, err = os.OpenFile(task.Stdout, create_and_append, 0600)
 		if err != nil {
+			fmt.Printf("Errors: %q", err)
 			return
 		}
 		cmd.Stderr, err = os.OpenFile(task.Stderr, create_and_append, 0600)
 		if err != nil {
+			fmt.Printf("Errors: %q", err)
 			return
 		}
 
-		cmd.Run()
+		fmt.Printf("Running task: %s\n", task.Name)
+		if err = cmd.Run(); err != nil {
+			fmt.Printf("Errors: %q", err)
+			return
+		}
 	}, nil
 }
