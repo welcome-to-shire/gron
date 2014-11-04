@@ -27,7 +27,7 @@ Commands.json:
   }
 }
 
-See README.md for comprehend examples.
+See README.md for comprehensive examples.
 ```
 */
 package gron
