@@ -1,6 +1,6 @@
 .PHONY: test
 
-PACKAGE=github.com/bcho/gron/gron
+PACKAGE=github.com/bcho/gron/pkg
 
 test:
 	go test $(PACKAGE)

@@ -4,14 +4,14 @@ Gron: cron job runner powered by golang.
 Usage:
 
 ```bash
-$ ./gron -config commands.json
+$ ./gron -config tasks.json
 ```
 
-Commands.json:
+Tasks.json:
 
 ```json
 {
-  "commands": {
+  "tasks": {
     "ping-google.com": {
       "schedule": "0 30 * * * *",
       "command": "ping -c 3 www.google.com",

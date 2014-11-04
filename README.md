@@ -5,10 +5,10 @@ Cron job runner powered by golang.
 ## Usage:
 
 ```bash
-$ ./gron -config commands.json
+$ ./gron -config tasks.json
 ```
 
-### Commands.json:
+### Tasks.json:
 
 ```json
 {
