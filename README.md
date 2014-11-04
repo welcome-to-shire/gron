@@ -45,6 +45,11 @@ $ ./gron -config tasks.json
 [robfig-cron]: https://github.com/robfig/cron/blob/master/doc.go
 
 
+## TODO
+
+- [ ] handle error
+- [ ] logging
+
 ## LICENSE
 
 See [LICENSE.md](LICENSE.md).
