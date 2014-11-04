@@ -26,10 +26,8 @@ Commands.json:
     }
   }
 }
+
+See README.md for comprehend examples.
 ```
-
-Time schedule format please refer [robfig/cron][robfig-cron].
-
-[robfig-cron]: https://github.com/robfig/cron/blob/master/doc.go
 */
 package gron
