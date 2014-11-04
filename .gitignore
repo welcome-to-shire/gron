@@ -1,3 +1,4 @@
-Godeps/
+Godeps/*
+!Godeps/Godeps.json
 local.json
 gron
