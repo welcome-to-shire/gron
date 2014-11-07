@@ -1,9 +1,4 @@
-.PHONY: test
-
-PACKAGE=github.com/bcho/gron/pkg
-
-test:
-	go test $(PACKAGE)
+.PHONY: install
 
 install:
 	go get github.com/robfig/cron
