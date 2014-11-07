@@ -9,6 +9,8 @@ import (
 )
 
 func main() {
+	setupLogger()
+
 	configFile := flag.String("config", "tasks.json", "Tasks.json")
 	flag.Parse()
 
@@ -34,4 +36,5 @@ func showUsage() {
 
 func setupLogger() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
+	log.SetPrefix("GRON ")
 }

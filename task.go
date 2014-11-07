@@ -2,7 +2,7 @@ package main
 
 import (
 	"errors"
-	"fmt"
+	"log"
 	"os"
 	"os/exec"
 	"strings"
@@ -19,8 +19,7 @@ func Start(config TasksConfig) {
 	for _, taskConfig := range config.Tasks {
 		job, err := makeCronJob(taskConfig)
 		if err != nil {
-			// TODO handle error like a gentleman
-			panic(err)
+			log.Fatal(err)
 		}
 
 		c.AddFunc(taskConfig.Schedule, job)
@@ -42,26 +41,33 @@ func makeCronJob(task TaskConfig) (Cronjob, error) {
 		cmd := exec.Command(cmdAndArgs[0], cmdAndArgs[1:]...)
 
 		// Prepare io.
-		const create_and_append = os.O_WRONLY | os.O_APPEND | os.O_CREATE
+		const (
+			mode = os.O_WRONLY | os.O_APPEND | os.O_CREATE
+			perm = 0600
+		)
 		cmd.Stdin, err = os.Open(task.Stdin)
 		if err != nil {
-			fmt.Printf("Errors: %q", err)
+			log.Printf("error when opening stdin: %q\n", err)
 			return
 		}
-		cmd.Stdout, err = os.OpenFile(task.Stdout, create_and_append, 0600)
+		cmd.Stdout, err = os.OpenFile(task.Stdout, mode, perm)
 		if err != nil {
-			fmt.Printf("Errors: %q", err)
+			log.Printf("error when opening stdout: %q\n", err)
 			return
 		}
-		cmd.Stderr, err = os.OpenFile(task.Stderr, create_and_append, 0600)
+		cmd.Stderr, err = os.OpenFile(task.Stderr, mode, perm)
 		if err != nil {
-			fmt.Printf("Errors: %q", err)
+			log.Printf("error when opening stderr: %q\n", err)
 			return
 		}
 
-		fmt.Printf("Running task: %s\n", task.Name)
+		log.Printf("running task: %s\n", task.Name)
 		if err = cmd.Run(); err != nil {
-			fmt.Printf("Errors: %q", err)
+			log.Printf(
+				"error when running task %s: %q\n",
+				task.Name,
+				err,
+			)
 			return
 		}
 	}, nil

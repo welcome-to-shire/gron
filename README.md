@@ -48,7 +48,7 @@ $ ./gron -config tasks.json
 ## TODO
 
 - [ ] handle error
-- [ ] logging
+- [x] logging
 
 ## LICENSE
 
