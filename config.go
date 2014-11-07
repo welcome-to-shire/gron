@@ -1,4 +1,4 @@
-package gron
+package main
 
 import (
 	"encoding/json"

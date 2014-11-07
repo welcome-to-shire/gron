@@ -30,4 +30,4 @@ Tasks.json:
 See README.md for comprehensive examples.
 ```
 */
-package gron
+package main
