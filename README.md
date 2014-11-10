@@ -29,9 +29,20 @@ $ ./gron -config tasks.json
       "command": "/path/to/my/awesome/prog",
       "stdin": "/path/to/some/awesome/input"
     }
+  ],
+
+  "reporters": [
+    {
+      "name": "my-fail-reporter",
+      "options": {
+        "reporter-options-field": "set something"
+      }
+    }
   ]
 }
 ```
+
+#### Task
 
 | field name | description | required? |
 |:----------:|-----------|---------|
@@ -45,9 +56,18 @@ $ ./gron -config tasks.json
 [robfig-cron]: https://github.com/robfig/cron/blob/master/doc.go
 
 
+#### Reporter
+
+| field name | description | required? |
+|:----------:|-------------|-----------|
+| name | reporter's name | yes |
+| options | reporter's options | no |
+
+
 ## TODO
 
 - [ ] handle error
+- [ ] rewrite doc
 - [x] logging
 
 ## LICENSE
