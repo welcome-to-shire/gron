@@ -27,6 +27,12 @@ func TestParseConfig(t *testing.T) {
                                 "stdout": "/var/tmp/stdout",
                                 "stderr": "/var/tmp/stderr"
                         }
+                ],
+                "reporters": [
+                        {
+                                "name": "log",
+                                "options": {}
+                        }
                 ]
         }`)
 
@@ -76,6 +82,11 @@ func TestParseConfig(t *testing.T) {
 	}
 	if task.Stderr != "/var/tmp/stderr" {
 		t.Errorf("task's stderr should not be changed")
+	}
+
+	// TODO split testcases for task & reporters
+	if len(parsed.Reporters) != 1 {
+		t.Errorf("reporters count expect 1, got %d", len(parsed.Reporters))
 	}
 }
 

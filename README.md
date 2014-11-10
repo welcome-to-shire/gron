@@ -66,8 +66,9 @@ $ ./gron -config tasks.json
 
 ## TODO
 
-- [ ] handle error
 - [ ] rewrite doc
+- [ ] refactor data structure usage
+- [x] handle error
 - [x] logging
 
 ## LICENSE

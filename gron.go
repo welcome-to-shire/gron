@@ -3,7 +3,6 @@ package main
 import (
 	"flag"
 	"log"
-	"time"
 )
 
 func main() {
@@ -14,10 +13,18 @@ func main() {
 
 	setupLogger()
 	config := setupConfig(configFile)
-	StartTasks(config.Tasks)
 
+	incidentCh := make(chan Incident)
+	StartTasks(config.Tasks, incidentCh)
+
+	// Listen on incident.
 	for {
-		time.Sleep(120 * time.Minute)
+		select {
+		case incident := <-incidentCh:
+			for _, reporter := range config.Reporters {
+				reporter.Report(incident)
+			}
+		}
 	}
 }
 

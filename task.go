@@ -13,11 +13,11 @@ import (
 type Cronjob func()
 
 // Start task manager and run the tasks.
-func StartTasks(configs []TaskConfig) {
+func StartTasks(configs []TaskConfig, incidentCh chan Incident) {
 	c := cron.New()
 
 	for _, taskConfig := range configs {
-		job, err := makeCronJob(taskConfig)
+		job, err := makeCronJob(taskConfig, incidentCh)
 		if err != nil {
 			log.Fatal(err)
 		}
@@ -29,8 +29,7 @@ func StartTasks(configs []TaskConfig) {
 }
 
 // Convert `TaskConfig` object into a cron job func.
-// TODO use channel to expose state.
-func makeCronJob(task TaskConfig) (Cronjob, error) {
+func makeCronJob(task TaskConfig, incidentCh chan Incident) (Cronjob, error) {
 	var err error
 
 	cmdAndArgs := strings.Split(task.Command, " ")
@@ -47,27 +46,23 @@ func makeCronJob(task TaskConfig) (Cronjob, error) {
 		)
 		cmd.Stdin, err = os.Open(task.Stdin)
 		if err != nil {
-			log.Printf("error when opening stdin: %q\n", err)
+			incidentCh <- Incident{task, err}
 			return
 		}
 		cmd.Stdout, err = os.OpenFile(task.Stdout, mode, perm)
 		if err != nil {
-			log.Printf("error when opening stdout: %q\n", err)
+			incidentCh <- Incident{task, err}
 			return
 		}
 		cmd.Stderr, err = os.OpenFile(task.Stderr, mode, perm)
 		if err != nil {
-			log.Printf("error when opening stderr: %q\n", err)
+			incidentCh <- Incident{task, err}
 			return
 		}
 
 		log.Printf("running task: %s\n", task.Name)
 		if err = cmd.Run(); err != nil {
-			log.Printf(
-				"error when running task %s: %q\n",
-				task.Name,
-				err,
-			)
+			incidentCh <- Incident{task, err}
 			return
 		}
 	}, nil

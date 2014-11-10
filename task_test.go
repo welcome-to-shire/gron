@@ -23,8 +23,9 @@ func TestMakeCronJob(t *testing.T) {
 		"/dev/null",
 		"/dev/null",
 	)
+	incidentCh := make(chan Incident)
 
-	job, err := makeCronJob(*task)
+	job, err := makeCronJob(*task, incidentCh)
 	if err != nil {
 		t.Error(err)
 	}
@@ -42,8 +43,9 @@ func TestMakeCronJobWithInvalidCommand(t *testing.T) {
 		"/dev/null",
 		"/dev/null",
 	)
+	incidentCh := make(chan Incident)
 
-	_, err := makeCronJob(*task)
+	_, err := makeCronJob(*task, incidentCh)
 	if err == nil {
 		t.Error("should not accept empty command")
 	}
