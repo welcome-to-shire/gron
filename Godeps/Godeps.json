@@ -1,11 +1,15 @@
 {
-	"ImportPath": "github.com/bcho/gron",
+	"ImportPath": "github.com/welcome-to-shire/gron",
 	"GoVersion": "go1.3.3",
 	"Deps": [
 		{
 			"ImportPath": "github.com/robfig/cron",
 			"Comment": "v1-3-gb024fc5",
 			"Rev": "b024fc5ea0e34bc3f83d9941c8d60b0622bfaca4"
+		},
+		{
+			"ImportPath": "github.com/welcome-to-shire/palantir-go",
+			"Rev": "8670b85f2de4fc12a1abd1ccae067fabab95cf71"
 		}
 	]
 }
