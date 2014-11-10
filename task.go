@@ -13,10 +13,10 @@ import (
 type Cronjob func()
 
 // Start task manager and run the tasks.
-func Start(config TasksConfig) {
+func StartTasks(configs []TaskConfig) {
 	c := cron.New()
 
-	for _, taskConfig := range config.Tasks {
+	for _, taskConfig := range configs {
 		job, err := makeCronJob(taskConfig)
 		if err != nil {
 			log.Fatal(err)

@@ -2,39 +2,35 @@ package main
 
 import (
 	"flag"
-	"fmt"
 	"log"
-	"os"
 	"time"
 )
 
 func main() {
-	setupLogger()
+	var configFile string
 
-	configFile := flag.String("config", "tasks.json", "Tasks.json")
+	flag.StringVar(&configFile, "config", "tasks.json", "Tasks.json")
 	flag.Parse()
 
-	if *configFile == "" {
-		showUsage()
-		os.Exit(1)
-	}
-	tasksConfig, err := ParseFile(*configFile)
-	if err != nil {
-		log.Fatal(err)
-	}
-	Start(*tasksConfig)
+	setupLogger()
+	config := setupConfig(configFile)
+	StartTasks(config.Tasks)
 
 	for {
 		time.Sleep(120 * time.Minute)
 	}
 }
 
-func showUsage() {
-	fmt.Fprintf(os.Stderr, "Usage: \n")
-	flag.PrintDefaults()
-}
-
 func setupLogger() {
 	log.SetFlags(log.LstdFlags | log.Lshortfile)
 	log.SetPrefix("GRON ")
+}
+
+func setupConfig(configFile string) *Config {
+	config, err := ParseFile(configFile)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	return config
 }
