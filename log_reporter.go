@@ -7,8 +7,8 @@ import (
 
 type LogReporter struct{}
 
-func makeLogReporter(options json.RawMessage) *LogReporter {
-	return new(LogReporter)
+func makeLogReporter(options json.RawMessage) (*LogReporter, error) {
+	return new(LogReporter), nil
 }
 
 func (r LogReporter) Report(incident Incident) {

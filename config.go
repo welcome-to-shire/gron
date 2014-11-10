@@ -3,7 +3,6 @@ package main
 import (
 	"encoding/json"
 	"errors"
-	"fmt"
 	"io"
 	"os"
 )
@@ -99,14 +98,5 @@ func prepareTask(task TaskConfig) (TaskConfig, error) {
 }
 
 func prepareReporter(reporterConfig ReporterConfig) (Reporter, error) {
-	reporter := getReporter(reporterConfig)
-	if reporter == nil {
-		reason := fmt.Sprintf(
-			"reporter: unknown name: %s",
-			reporterConfig.Name,
-		)
-		return nil, errors.New(reason)
-	}
-
-	return reporter, nil
+	return getReporter(reporterConfig)
 }
