@@ -1,6 +1,6 @@
 # Gron
 
-[![Build Status](https://travis-ci.org/welcome-to-shire/gron.svg?branch=master)](https://travis-ci.org/welcome-to-shire/gron) ![Current Version](http://img.shields.io/badge/version-0.0.1-brightgreen.svg)
+[![Build Status](https://travis-ci.org/welcome-to-shire/gron.svg?branch=master)](https://travis-ci.org/welcome-to-shire/gron) ![Current Version](http://img.shields.io/badge/version-0.0.2-brightgreen.svg)
 
 Cron job runner powered by golang.
 
