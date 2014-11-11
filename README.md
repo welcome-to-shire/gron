@@ -10,7 +10,7 @@ Cron job runner powered by golang.
 $ ./gron -config tasks.json
 ```
 
-### Tasks.json:
+## Tasks.json:
 
 ```json
 {
@@ -42,10 +42,12 @@ $ ./gron -config tasks.json
 }
 ```
 
-#### Task
+### Task
+
+Setting Fields:
 
 | field name | description | required? |
-|:----------:|-----------|---------|
+|:----------|-----------|---------|
 | name | task name | yes |
 | schedule | task schedule format string, please refer [robfig/cron][robfig-cron] | yes |
 | command | task command | yes |
@@ -56,20 +58,27 @@ $ ./gron -config tasks.json
 [robfig-cron]: https://github.com/robfig/cron/blob/master/doc.go
 
 
-#### Reporter
+### Reporter
+
+When a task failed, reporter will receive a incident record and it can do something
+on this issue (like warning the SA).
+
+Setting Fields:
 
 | field name | description | required? |
 |:----------:|-------------|-----------|
 | name | reporter's name | yes |
 | options | reporter's options | no |
 
+Supported Reporters:
 
-## TODO
+- `log`: simply write the incident to log (using [log][golang-log] package).
+- `palantir`: send the incident report to [palantir][shire-palantir]. See [palantir_reporter.go](palantir_reporter.go) for detailed setting options.
 
-- [ ] rewrite doc
-- [ ] refactor data structure usage
-- [x] handle error
-- [x] logging
+
+[golang-log]: http://golang.org/pkg/log/
+[shire-palantir]: https://github.com/welcome-to-shire/palantir
+
 
 ## LICENSE
 

@@ -9,6 +9,10 @@ import (
 	palantir "github.com/welcome-to-shire/palantir-go"
 )
 
+// Palantir setting options:
+//
+// - host: palantir server's host, string like 127.0.0.1:5566
+// - subject: report subject
 type PalantirReporter struct {
 	Host    string `json:"host"`
 	Subject string `json:"subject"`
