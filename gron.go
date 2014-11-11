@@ -16,16 +16,7 @@ func main() {
 
 	incidentCh := make(chan Incident)
 	StartTasks(config.Tasks, incidentCh)
-
-	// Listen on incident.
-	for {
-		select {
-		case incident := <-incidentCh:
-			for _, reporter := range config.Reporters {
-				reporter.Report(incident)
-			}
-		}
-	}
+	WaitIncident(config.Reporters, incidentCh)
 }
 
 func setupLogger() {

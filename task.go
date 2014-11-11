@@ -10,7 +10,18 @@ import (
 	"github.com/robfig/cron"
 )
 
+const DEFAULT_STDIO_FILE = "/dev/null"
+
 type Cronjob func()
+
+type TaskConfig struct {
+	Name     string `json:"name"`
+	Schedule string `json:"schedule"`
+	Command  string `json:"command"`
+	Stdin    string `json:"stdin,omitempty"`
+	Stdout   string `json:"stdout,omitempty"`
+	Stderr   string `json:"stderr,omitempty"`
+}
 
 // Start task manager and run the tasks.
 func StartTasks(configs []TaskConfig, incidentCh chan Incident) {
@@ -26,6 +37,33 @@ func StartTasks(configs []TaskConfig, incidentCh chan Incident) {
 	}
 
 	c.Start()
+}
+
+func prepareTask(task TaskConfig) (TaskConfig, error) {
+	requiredFields := []struct {
+		value, name string
+	}{
+		{task.Name, "task name"},
+		{task.Command, "task command"},
+		{task.Schedule, "task schedule"},
+	}
+	for _, field := range requiredFields {
+		if field.value == "" {
+			return task, errors.New(`task: should specify ` + field.name)
+		}
+	}
+
+	if task.Stderr == "" {
+		task.Stderr = DEFAULT_STDIO_FILE
+	}
+	if task.Stdin == "" {
+		task.Stdin = DEFAULT_STDIO_FILE
+	}
+	if task.Stdout == "" {
+		task.Stdout = DEFAULT_STDIO_FILE
+	}
+
+	return task, nil
 }
 
 // Convert `TaskConfig` object into a cron job func.
